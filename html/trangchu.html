@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meez Jewelry</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    // Xử lý đăng ký
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Lưu thông tin người dùng vào localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push({ email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Đăng ký thành công!');
+            registerForm.reset();
+        });
+    }
+
+    // Xử lý đăng nhập
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Kiểm tra thông tin người dùng từ localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                alert('Đăng nhập thành công!');
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                loginForm.reset();
+                // Chuyển hướng hoặc cập nhật giao diện sau khi đăng nhập thành công
+            } else {
+                alert('Email hoặc mật khẩu không đúng!');
+            }
+        });
+    }
+});
+    </script>
+</head>
+<body>
+    <style>
+    .hero {
+    position: relative;
+    background: url('../img/logo.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh; /* Chiều cao toàn màn hình */
+    display: flex;
+    flex-direction: column; /* Đảm bảo nội dung con xếp theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px #fff;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px #fff;
+}
+
+.hero .btn {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    background-color: #d4377e;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.hero .btn:hover {
+    background-color: #000000;
+}
+
+    </style>
+    <!-- Top Bar -->
+    <div class="top-bar bg-dark text-light py-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <span><i class="fas fa-phone me-2"></i>0375962014</span>
+                    <span class="ms-3"><i class="fas fa-envelope me-2"></i>contact@diamond.com</span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header py-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="index.html" class="logo">
+                        <h1>DIAMOD <span>JEWELRY</span></h1>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <form class="search-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                            <button class="btn btn-gold" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user me-2"></i>Đăng nhập
+                    </button>
+                    <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
+                    <a href="./giohang.html" class="btn btn-outline-dark position-relative">
+                        <i class="fas fa-shopping-cart" ></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Đăng Ký -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Đăng ký</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold w-100">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Đăng Nhập -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Đăng nhập</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold w-100">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="./bst.html">Trang chủ</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Trang sức</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../html/nhan.html">Nhẫn</a></li>
+                            <li><a class="dropdown-item" href="./daychuyen.html">Dây chuyền</a></li>
+                            <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="./gioithieu.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./tintuc.html">Tin tức</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="banner">
+        <div class="banner-content">
+            <h2>Bộ sưu tập trang sức <span>Quý Ông</span></h2>
+            <h1>Khơi dậy bản lĩnh</h1>
+            <p>Khẳng định đẳng cấp</p>
+        </div>
+        <div class="banner-image">
+            <img src="https://file.hstatic.net/1000381168/collection/1920x820px_5f41ea2ecbd64de19fc812bcacafdc98.jpg" alt="Nhẫn Humming" class="ring humming">
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <!-- Product Item -->
+    <div class="col">
+        <div class="product-card">
+            <a href="./1.html" class="product-link">
+                <div class="product-image">
+                    <img src="https://product.hstatic.net/1000381168/product/upload_6b1c13330a6343e6ac692251d8a70097_master.jpg" alt="Ring Image">
+                    <div class="product-overlay">
+                        <span class="view-details">Xem chi tiết</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <p class="product-title">Nhẫn nam đính đá CZ vàng 10K Chalice N 3CT</p>
+                    <p class="product-price">13,400,000₫</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="product-card">
+            <a href="./1.html" class="product-link">
+                <div class="product-image">
+                    <img src="https://product.hstatic.net/1000381168/product/upload_1c141f822e5a4e7990d2c654180a2c2a_master.jpg" alt="Ring Image">
+                    <div class="product-overlay">
+                        <span class="view-details">Xem chi tiết</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <p class="product-title">Nhẫn nam đính đá CZ vàng 10K Chalice N 3CT</p>
+                    <p class="product-price">13,400,000₫</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="product-card">
+            <a href="./1.html" class="product-link">
+                <div class="product-image">
+                    <img src="https://product.hstatic.net/1000381168/product/upload_05f446d341024c4a9ebfe18c41c8baf8_master.jpg" alt="Ring Image">
+                    <div class="product-overlay">
+                        <span class="view-details">Xem chi tiết</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <p class="product-title">Nhẫn nam đính đá CZ vàng 10K Chalice N 3CT</p>
+                    <p class="product-price">13,400,000₫</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="product-card">
+            <a href="./1.html" class="product-link">
+                <div class="product-image">
+                    <img src="https://product.hstatic.net/1000381168/product/upload_affa15b170374ccf8439cc7dd4fdb5d9_master.jpg" alt="Ring Image">
+                    <div class="product-overlay">
+                        <span class="view-details">Xem chi tiết</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <p class="product-title">Nhẫn nam đính đá CZ vàng 10K Chalice N 3CT</p>
+                    <p class="product-price">13,400,000₫</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Về DIAMOD</h5>
+                    <p>Thương hiệu trang sức cao cấp hàng đầu Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên kết nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="./vct.html">Về chúng tôi</a></li>
+                        <li><a href="products.html">Sản phẩm</a></li>
+                        <li><a href="news.html">Tin tức</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyen Thai Son Street, Ward 5, Go Vap</li>
+                        <li><i class="fas fa-phone"></i> 0375962014</li>
+                        <li><i class="fas fa-envelope"></i> contact@diamond.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

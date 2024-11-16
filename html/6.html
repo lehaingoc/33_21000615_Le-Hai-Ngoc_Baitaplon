@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = [];
+            const cartCountElement = document.getElementById('cart-count');
+    
+            // Xử lý sự kiện cho nút "Thêm vào giỏ hàng"
+            document.querySelector('.btn.primary').addEventListener('click', function() {
+                const productTitle = document.querySelector('.product-info h1').textContent;
+                const productPrice = parseFloat(document.querySelector('.price').textContent.replace(/₫|,/g, ''));
+                addToCart(productTitle, productPrice);
+            });
+    
+            // Xử lý sự kiện cho nút "Mua ngay"
+            document.querySelector('.btn.primary:nth-child(3)').addEventListener('click', function() {
+                const productTitle = document.querySelector('.product-info h1').textContent;
+                const productPrice = parseFloat(document.querySelector('.price').textContent.replace(/₫|,/g, ''));
+                addToCart(productTitle, productPrice);
+                alert('Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.');
+            });
+    
+            function addToCart(productTitle, productPrice) {
+                const productInCart = cart.find(item => item.title === productTitle);
+    
+                if (productInCart) {
+                    productInCart.quantity += 1;
+                } else {
+                    cart.push({ title: productTitle, price: productPrice, quantity: 1 });
+                }
+    
+                updateCart();
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
+    
+            function updateCart() {
+                cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            }
+        });
+    </script>
+</head>
+<style>
+    /* General Styles */
+body {
+    background-color: #f7f4eb;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.top-bar, .main-header, footer {
+    background-color: #333;
+    color: #fff;
+}
+
+.top-bar a, .main-header a, footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.top-bar a:hover, .main-header a:hover, footer a:hover {
+    color: #ddd;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.product-detail {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.product-images {
+    flex: 1;
+    text-align: center;
+}
+
+.main-image {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.thumbnail-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.product-info {
+    flex: 1;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product-options {
+    margin: 20px 0;
+}
+
+.option {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.size-guide {
+    display: block;
+    margin-top: 5px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.size-guide:hover {
+    text-decoration: underline;
+}
+
+.contact {
+    margin: 20px 0;
+}
+
+.contact a {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn.primary {
+    background-color: #000;
+    color: #fff;
+}
+
+.btn.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+footer {
+    padding: 20px 0;
+}
+
+footer h5 {
+    margin-bottom: 15px;
+}
+
+.footer-links, .footer-contact {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li, .footer-contact li {
+    margin-bottom: 10px;
+}
+
+.social-links a {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+</style>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar bg-dark text-light py-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <span><i class="fas fa-phone me-2"></i>0375962014</span>
+                    <span class="ms-3"><i class="fas fa-envelope me-2"></i>contact@diamond.com</span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header py-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="index.html" class="logo">
+                        <h1>MEEZ <span>JEWELRY</span></h1>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <form class="search-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                            <button class="btn btn-gold" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user me-2"></i>Đăng nhập
+                    </button>
+                    <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Trang sức</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../html/nhan.html">Nhẫn</a></li>
+                            <li><a class="dropdown-item" href="./daychuyen.html">Dây chuyền</a></li>
+                            <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Bộ sưu tập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="product-detail">
+        <div class="product-images">
+            <img src="https://product.hstatic.net/1000381168/product/upload_bdea2e701245485baf7f03fef71b86cc_master.jpg" alt="Nhẫn nam" class="main-image">
+            <div class="thumbnail-list">
+                <img src="https://product.hstatic.net/1000381168/product/upload_bdea2e701245485baf7f03fef71b86cc_master.jpg" alt="Thumbnail 1" class="thumbnail">
+                <img src="https://product.hstatic.net/1000381168/product/upload_bdea2e701245485baf7f03fef71b86cc_master.jpg" alt="Thumbnail 2" class="thumbnail">
+                <img src="https://product.hstatic.net/1000381168/product/upload_bdea2e701245485baf7f03fef71b86cc_master.jpg" alt="Thumbnail 3" class="thumbnail">
+            </div>
+        </div>
+        <div class="product-info">
+            <h1>Nhẫn nam đính đá CZ vàng 10K Masterful 1.5CT WY</h1>
+            <p class="price">17,500,000₫</p>
+            
+            <div class="product-options">
+                <div class="option">
+                    <label for="material">Chất liệu:</label>
+                    <select id="material">
+                        <option>Vàng 10K trắng ghép: vàng</option>
+                        <option>Vàng 14K trắng</option>
+                        <option>Vàng 18K trắng</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label for="main-stone">Viên chính:</label>
+                    <select id="main-stone">
+                        <option>ĐÁ CZ WHIRD7.5x1</option>
+                        <option>ĐÁ CZ WHIRD8.0x1</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label for="side-stone">Viên phụ:</label>
+                    <select id="side-stone">
+                        <option>ĐÁ CZ WHIRD1.1x10</option>
+                        <option>ĐÁ CZ WHIRD1.2x10</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label for="size">Ni (size):</label>
+                    <select id="size">
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                    </select>
+                    <a href="#" class="size-guide">Hướng dẫn chọn Ni (size)</a>
+                </div>
+            </div>
+
+            <div class="contact">
+                <p>Liên hệ <a href="tel:18009298">18009298</a> (miễn phí cước gọi) để được tư vấn chi tiết</p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn secondary">Kết hợp với kim cương</button>
+                <button class="btn primary">Thêm vào giỏ hàng</button>
+                <button class="btn primary">Mua ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Về MEEZ</h5>
+                    <p>Thương hiệu trang sức cao cấp hàng đầu Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên kết nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Về chúng tôi</a></li>
+                        <li><a href="products.html">Sản phẩm</a></li>
+                        <li><a href="news.html">Tin tức</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Thái Sơn, Gò Vấp</li>
+                        <li><i class="fas fa-phone"></i> 0375962014</li>
+                        <li><i class="fas fa-envelope"></i> contact@meez.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

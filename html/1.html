@@ -8,6 +8,44 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = [];
+            const cartCountElement = document.getElementById('cart-count');
+    
+            // Xử lý sự kiện cho nút "Thêm vào giỏ hàng"
+            document.querySelector('.btn.primary').addEventListener('click', function() {
+                const productTitle = document.querySelector('.product-info h1').textContent;
+                const productPrice = parseFloat(document.querySelector('.price').textContent.replace(/₫|,/g, ''));
+                addToCart(productTitle, productPrice);
+            });
+    
+            // Xử lý sự kiện cho nút "Mua ngay"
+            document.querySelector('.btn.primary:nth-child(3)').addEventListener('click', function() {
+                const productTitle = document.querySelector('.product-info h1').textContent;
+                const productPrice = parseFloat(document.querySelector('.price').textContent.replace(/₫|,/g, ''));
+                addToCart(productTitle, productPrice);
+                alert('Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.');
+            });
+    
+            function addToCart(productTitle, productPrice) {
+                const productInCart = cart.find(item => item.title === productTitle);
+    
+                if (productInCart) {
+                    productInCart.quantity += 1;
+                } else {
+                    cart.push({ title: productTitle, price: productPrice, quantity: 1 });
+                }
+    
+                updateCart();
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
+    
+            function updateCart() {
+                cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            }
+        });
+    </script>
 </head>
 <style>
     /* General Styles */
@@ -243,7 +281,6 @@ footer h5 {
                     <li class="nav-item"><a class="nav-link" href="products.html">Bộ sưu tập</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">Giới thiệu</a></li>
                     <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sitemap.html">Sitemap</a></li>
                 </ul>
             </div>
         </div>

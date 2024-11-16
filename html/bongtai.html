@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Meez Jewelry</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Top Bar -->
@@ -33,7 +34,7 @@
             <div class="row align-items-center">
                 <div class="col-md-3">
                     <a href="index.html" class="logo">
-                        <h1>MEEZ <span>JEWELRY</span></h1>
+                        <h1>DIAMOD <span>JEWELRY</span></h1>
                     </a>
                 </div>
                 <div class="col-md-6">
@@ -51,6 +52,12 @@
                         <i class="fas fa-user me-2"></i>Đăng nhập
                     </button>
                     <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
+                    <a href="./giohang.html" class="btn btn-outline-dark position-relative">
+                        <i class="fas fa-shopping-cart" ></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                            0
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -72,20 +79,22 @@
                             <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="products.html">Bộ sưu tập</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">Giới thiệu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="news.html">Tin tức</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sitemap.html">Sitemap</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./bst.html">Bộ sưu tập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./gioithieu.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./tintuc.html">Tin tức</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+
+
+    <!-- Footer -->
     <footer class="bg-dark text-light py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5>Về MEEZ</h5>
+                    <h5>Về DIAMOD</h5>
                     <p>Thương hiệu trang sức cao cấp hàng đầu Việt Nam</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
@@ -96,7 +105,7 @@
                 <div class="col-md-4">
                     <h5>Liên kết nhanh</h5>
                     <ul class="footer-links">
-                        <li><a href="about.html">Về chúng tôi</a></li>
+                        <li><a href="./vct.html">Về chúng tôi</a></li>
                         <li><a href="products.html">Sản phẩm</a></li>
                         <li><a href="news.html">Tin tức</a></li>
                         <li><a href="sitemap.html">Sitemap</a></li>
@@ -105,14 +114,18 @@
                 <div class="col-md-4">
                     <h5>Liên hệ</h5>
                     <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Thái Sơn, Gò Vấp</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyen Thai Son Street, Ward 5, Go Vap</li>
                         <li><i class="fas fa-phone"></i> 0375962014</li>
-                        <li><i class="fas fa-envelope"></i> contact@meez.com</li>
+                        <li><i class="fas fa-envelope"></i> contact@diamond.com</li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

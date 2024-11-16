@@ -73,6 +73,35 @@
     });
 });
 
+// Hàm thêm sản phẩm vào giỏ hàng
+function addToCart(productId, productName, productPrice, productImage) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
+    const existingProduct = cart.find(item => item.id === productId);
+
+    if (existingProduct) {
+        // Tăng số lượng sản phẩm nếu đã tồn tại
+        existingProduct.quantity += 1;
+    } else {
+        // Thêm sản phẩm mới vào giỏ hàng
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            image: productImage,
+            quantity: 1,
+        });
+    }
+
+    // Lưu giỏ hàng vào LocalStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Sản phẩm đã được thêm vào giỏ hàng!');
+}
+
+
+
+
     </script>
 </head>
 <body>
@@ -117,7 +146,7 @@
                         <i class="fas fa-user me-2"></i>Đăng nhập
                     </button>
                     <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
-                    <a href="#" class="btn btn-outline-dark position-relative">
+                    <a href="./giohang.html" class="btn btn-outline-dark position-relative">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                             0
@@ -161,6 +190,7 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Trang sức</a>
                         <ul class="dropdown-menu">
@@ -169,10 +199,8 @@
                             <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="./bst.html">Bộ sưu tập</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./gioithieu.html">Giới thiệu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./tintuc.html">Tin tức</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sitemap.html">Sitemap</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./sukien.html">Sự kiện</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./gt.html">Giới thiệu</a></li>
                 </ul>
             </div>
         </div>
@@ -198,7 +226,7 @@
                             </div>
                             <div class="product-info">
                                 <p class="product-title">Nhẫn nữ đính đá CZ vàng 10K Chalice N 3CT</p>
-                                <p class="product-price">13,400,000₫</p>
+                                <p class="product-price">15,400,000₫</p>
                             </div>
                         </a>
                         <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
@@ -207,10 +235,9 @@
 
                 <div class="col">
                     <div class="product-card">
-                        <a href="./1.html" class="product-link">
+                        <a href="./2.html" class="product-link">
                             <div class="product-image">
                                 <img src="https://product.hstatic.net/1000381168/product/upload_45c19e3681e444e9ae54df1354a25a3c_master.jpg" alt="Ring Image">
-                                <a href="./1.html"></a>
                                 <div class="product-overlay">
                                     <span class="view-details">Xem chi tiết</span>
                                 </div>
@@ -226,17 +253,16 @@
 
                 <div class="col">
                     <div class="product-card">
-                        <a href="./1.html" class="product-link">
+                        <a href="./5.html" class="product-link">
                             <div class="product-image">
-                                <img src="https://product.hstatic.net/1000381168/product/upload_45c19e3681e444e9ae54df1354a25a3c_master.jpg" alt="Ring Image">
-                                <a href="./2.html"></a>
+                                <img src="https://product.hstatic.net/1000381168/product/upload_bdea2e701245485baf7f03fef71b86cc_master.jpg" alt="Ring Image">
                                 <div class="product-overlay">
                                     <span class="view-details">Xem chi tiết</span>
                                 </div>
                             </div>
                             <div class="product-info">
                                 <p class="product-title">Nhẫn nữ đính đá CZ vàng 10K Chalice N 3CT</p>
-                                <p class="product-price">13,400,000₫</p>
+                                <p class="product-price">15,400,000₫</p>
                             </div>
                         </a>
                         <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
@@ -245,10 +271,9 @@
 
                 <div class="col">
                     <div class="product-card">
-                        <a href="./1.html" class="product-link">
+                        <a href="./6.html" class="product-link">
                             <div class="product-image">
                                 <img src="https://product.hstatic.net/1000381168/product/upload_45c19e3681e444e9ae54df1354a25a3c_master.jpg" alt="Ring Image">
-                                <a href="/html/3.html"></a>
                                 <div class="product-overlay">
                                     <span class="view-details">Xem chi tiết</span>
                                 </div>
@@ -270,7 +295,6 @@
                         <a href="./1.html" class="product-link">
                             <div class="product-image">
                                 <img src="https://product.hstatic.net/1000381168/product/upload_2df867b580754f089e8db5dc7913d9f5_master.jpg" alt="Ring Image">
-                                <a href="/html/4.html"></a>
                                 <div class="product-overlay">
                                     <span class="view-details">Xem chi tiết</span>
                                 </div>

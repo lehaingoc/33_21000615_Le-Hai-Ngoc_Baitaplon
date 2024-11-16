@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meez Jewelry</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    // Xử lý đăng ký
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Lưu thông tin người dùng vào localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push({ email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Đăng ký thành công!');
+            registerForm.reset();
+        });
+    }
+
+    // Xử lý đăng nhập
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Kiểm tra thông tin người dùng từ localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                alert('Đăng nhập thành công!');
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                loginForm.reset();
+                // Chuyển hướng hoặc cập nhật giao diện sau khi đăng nhập thành công
+            } else {
+                alert('Email hoặc mật khẩu không đúng!');
+            }
+        });
+    }
+});
+    </script>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .intro-section {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .content {
+            width: 70%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #d4377e;
+            font-weight: bold;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .checklist {
+            color: #d4377e;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .checklist i {
+            margin-right: 5px;
+        }
+
+        .sidebar {
+            width: 25%;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 3px solid #d4377e;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h3 {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar i {
+            color: #d4377e;
+            margin-right: 5px;
+        }
+
+        .reviews-section {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .reviews-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .reviews-section h2 span {
+            color: #d4377e;
+        }
+
+        .review-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            text-align: center;
+        }
+
+        .review-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .review-card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .review-card h4 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .review-card .stars {
+            color: #d4377e;
+        }
+
+    </style>
+    <!-- Top Bar -->
+    <div class="top-bar bg-dark text-light py-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <span><i class="fas fa-phone me-2"></i>0375962014</span>
+                    <span class="ms-3"><i class="fas fa-envelope me-2"></i>contact@diamond.com</span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header py-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="index.html" class="logo">
+                        <h1>DIAMOD <span>JEWELRY</span></h1>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <form class="search-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                            <button class="btn btn-gold" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user me-2"></i>Đăng nhập
+                    </button>
+                    <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
+                    <a href="./giohang.html" class="btn btn-outline-dark position-relative">
+                        <i class="fas fa-shopping-cart" ></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Đăng Ký -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Đăng ký</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold w-100">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Đăng Nhập -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Đăng nhập</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold w-100">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Trang sức</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../html/nhan.html">Nhẫn</a></li>
+                            <li><a class="dropdown-item" href="./daychuyen.html">Dây chuyền</a></li>
+                            <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="./gioithieu.html">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./tintuc.html">Tin tức</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="intro-section">
+            <!-- Phần nội dung chính -->
+            <div class="content">
+                <h2>Diamod Jewelry - Mang đến những sản phẩm chất lượng cho bạn</h2>
+                <p>
+                    Diamod Jewelry là một trong những đơn vị tiên phong hoạt động trong lĩnh vực kinh doanh các dòng sản phẩm trang sức. 
+                    Thành lập từ năm 2010 đến nay, Diamod Jewerly đã tạo dựng được chỗ đứng vững chắc trên thị trường và trở thành cái tên quen thuộc đối với khách hàng.
+                </p>
+                <p>
+                    Sau 14 năm thành lập, Diamod Jewerly luôn nỗ lực hết mình để đem đến dịch vụ và giải pháp công nghệ chuyên nghiệp. Chúng tôi cam kết mang đến sự tin cậy, an tâm cho khách hàng với chất lượng sản phẩm và chế độ hậu mãi tốt nhất.
+                </p>
+                <img src="https://nhandaquy.vn/wp-content/uploads/2022/02/nhan_daquy-nhan-daquy-a-10..jpg" alt="Luzo-Star Image">
+                <p class="checklist">
+                    <i class="fas fa-check"></i> Trang sức chất lượng - Bảo hành hậu mãi DÀI LÂU<br>
+                    <i class="fas fa-check"></i> Hàng mới 100% chính hãng - GIÁ TỐT NHẤT THỊ TRƯỜNG
+                </p>
+                <p>
+                    Quy tụ đội ngũ nhân viên trẻ, nhiệt huyết, và chuyên môn cao, chúng tôi luôn sẵn sàng hỗ trợ khách hàng tìm kiếm sản phẩm phù hợp nhất.
+                </p>
+            </div>
+    
+            <!-- Phần danh sách thành viên -->
+            <div class="sidebar">
+                <h3><i class="fas fa-users"></i> Danh sách thành viên</h3>
+                <ul>
+                    <li><i class="fas fa-user"></i> 21000615 Lê Hải Ngọc</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container reviews-section">
+        <h2>Khách hàng <span>đánh giá</span></h2>
+        <div class="row">
+            <!-- Đánh giá 1 -->
+            <div class="col-md-4">
+                <div class="review-card">
+                    <img src="../img/cv.jpg" alt="Customer Image">
+                    <p>Chời ơi nhân viên dễ thương gì đâu, tư vấn nhiệt tình, 10 điểm.</p>
+                    <h4>Nhựt Khang</h4>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Đánh giá 2 -->
+            <div class="col-md-4">
+                <div class="review-card">
+                    <img src="../img/z6040018680529_220dfd5fffc6d408d2cc667ba964cc35.jpg" alt="Customer Image">
+                    <p>Sản phẩm chất lượng, rất ưng ý, tôi cảm thấy rất hài lòng.</p>
+                    <h4>Nhựt Khang</h4>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Đánh giá 3 -->
+            <div class="col-md-4">
+                <div class="review-card">
+                    <img src="../img/z6040018680529_220dfd5fffc6d408d2cc667ba964cc35.jpg" alt="Customer Image">
+                    <p>Chuyên nghiệp, tôi sẽ giới thiệu cho bạn bè của tôi về shop này.</p>
+                    <h4>Nhựt Khang</h4>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Về DIAMOD</h5>
+                    <p>Thương hiệu trang sức cao cấp hàng đầu Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên kết nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="./vct.html">Về chúng tôi</a></li>
+                        <li><a href="products.html">Sản phẩm</a></li>
+                        <li><a href="news.html">Tin tức</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyen Thai Son Street, Ward 5, Go Vap</li>
+                        <li><i class="fas fa-phone"></i> 0375962014</li>
+                        <li><i class="fas fa-envelope"></i> contact@diamond.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
