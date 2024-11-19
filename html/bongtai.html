@@ -9,6 +9,100 @@
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const cart = [];
+    const cartCountElement = document.getElementById('cart-count');
+    const cartItemsElement = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    const checkoutButton = document.getElementById('checkout-button');
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            const productTitle = this.parentElement.querySelector('.product-title').textContent;
+            const productPrice = parseFloat(this.parentElement.querySelector('.product-price').textContent.replace(/₫|,/g, ''));
+            addToCart(productId, productTitle, productPrice);
+        });
+    });
+
+    function addToCart(productId, productTitle, productPrice) {
+        const productInCart = cart.find(item => item.id === productId);
+
+        if (productInCart) {
+            productInCart.quantity += 1;
+        } else {
+            cart.push({ id: productId, title: productTitle, price: productPrice, quantity: 1 });
+        }
+
+        updateCart();
+        alert('Sản phẩm đã được thêm vào giỏ hàng!');
+    }
+
+    function updateCart() {
+        cartItemsElement.innerHTML = '';
+        let total = 0;
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+            listItem.textContent = `${item.title} x ${item.quantity}`;
+            const priceSpan = document.createElement('span');
+            priceSpan.textContent = `${itemTotal.toLocaleString()}₫`;
+            listItem.appendChild(priceSpan);
+            cartItemsElement.appendChild(listItem);
+        });
+
+        cartTotalElement.textContent = `${total.toLocaleString()}₫`;
+        cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    checkoutButton.addEventListener('click', function() {
+        if (cart.length === 0) {
+            alert('Giỏ hàng của bạn đang trống!');
+        } else {
+            alert('Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.');
+            cart.length = 0; // Clear the cart
+            updateCart();
+            $('#cartModal').modal('hide');
+        }
+    });
+});
+
+// Hàm thêm sản phẩm vào giỏ hàng
+function addToCart(productId, productName, productPrice, productImage) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
+    const existingProduct = cart.find(item => item.id === productId);
+
+    if (existingProduct) {
+        // Tăng số lượng sản phẩm nếu đã tồn tại
+        existingProduct.quantity += 1;
+    } else {
+        // Thêm sản phẩm mới vào giỏ hàng
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            image: productImage,
+            quantity: 1,
+        });
+    }
+
+    // Lưu giỏ hàng vào LocalStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Sản phẩm đã được thêm vào giỏ hàng!');
+}
+
+
+
+
+    </script>
 </head>
 <body>
     <!-- Top Bar -->
@@ -53,7 +147,7 @@
                     </button>
                     <a href="./dangky.html" class="btn btn-gold">Đăng ký</a>
                     <a href="./giohang.html" class="btn btn-outline-dark position-relative">
-                        <i class="fas fa-shopping-cart" ></i>
+                        <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
                             0
                         </span>
@@ -63,6 +157,31 @@
         </div>
     </header>
 
+    <!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="cart-items" class="list-group mb-3">
+                    <!-- Cart items will be dynamically added here -->
+                </ul>
+                <div class="d-flex justify-content-between">
+                    <strong>Tổng cộng:</strong>
+                    <span id="cart-total">0₫</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="checkout-button">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -71,6 +190,7 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="./trangchu.html">Trang chủ</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Trang sức</a>
                         <ul class="dropdown-menu">
@@ -79,15 +199,197 @@
                             <li><a class="dropdown-item" href="./bongtai.html">Bông tai</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="./bst.html">Bộ sưu tập</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./gioithieu.html">Giới thiệu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./tintuc.html">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./sukien.html">Sự kiện</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./gt.html">Giới thiệu</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    
+    
 
+    <!-- Featured Products -->
+    <section class="featured-products py-5">
+        <div class="container">
+            <h3 class="section-title">Sản phẩm nổi bật</h3>
+            <div class="row">
+                <!-- Product Card -->
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./1.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_b103f3a0ca73439ab4fd7d5e42f19932_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai nữ đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">15,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./2.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_a273c1fd2bee44fcbb6e258f2e5d2b7b_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./5.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">15,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./6.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title"></p>Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="container my-4">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                        <!-- Product Item -->
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./1.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./1.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./1.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="product-card">
+                        <a href="./1.html" class="product-link">
+                            <div class="product-image">
+                                <img src="https://product.hstatic.net/1000381168/product/upload_08ba2725f7b846eb96c7ee6411c6f043_master.jpg" alt="Ring Image">
+                                <div class="product-overlay">
+                                    <span class="view-details">Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-title">Bông tai đính đá CZ vàng 10K Chalice N 3CT</p>
+                                <p class="product-price">13,400,000₫</p>
+                            </div>
+                        </a>
+                        <button class="btn btn-gold add-to-cart" data-product-id="1">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+                <!-- Thêm các product card khác -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đăng nhập</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-gold w-100">Đăng nhập</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-light py-5">

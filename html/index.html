@@ -3,74 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meez Jewelry</title>
+    <title>Diamod Jewelry</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Xử lý đăng ký
-    if (registerForm) {
-        registerForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-
-            // Lưu thông tin người dùng vào localStorage
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            users.push({ email, password });
-            localStorage.setItem('users', JSON.stringify(users));
-
-            alert('Đăng ký thành công!');
-            registerForm.reset();
-        });
-    }
-
-    // Xử lý đăng nhập
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            // Kiểm tra thông tin người dùng từ localStorage
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(user => user.email === email && user.password === password);
-
-            if (user) {
-                alert('Đăng nhập thành công!');
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                loginForm.reset();
-                // Chuyển hướng hoặc cập nhật giao diện sau khi đăng nhập thành công
-            } else {
-                alert('Email hoặc mật khẩu không đúng!');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lắng nghe sự kiện submit của form đăng nhập
+            const loginForm = document.getElementById("loginForm");
+    
+            loginForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn reload trang
+    
+                // Lấy dữ liệu từ form
+                const email = document.getElementById("loginEmail").value;
+                const password = document.getElementById("loginPassword").value;
+    
+                if (email && password) {
+                    // Lưu thông tin vào Local Storage
+                    localStorage.setItem("userEmail", email);
+                    localStorage.setItem("userPassword", password);
+    
+                    // Hiển thị thông báo và đóng modal
+                    alert("Đăng nhập thành công!");
+                    const loginModal = document.querySelector("#loginModal");
+                    const modal = bootstrap.Modal.getInstance(loginModal);
+                    modal.hide();
+                } else {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                }
+            });
+    
+            // Tùy chọn: Hiển thị thông tin đăng nhập khi trang được tải lại
+            const savedEmail = localStorage.getItem("userEmail");
+            if (savedEmail) {
+                console.log(`Chào mừng trở lại, ${savedEmail}`);
             }
         });
-    }
-
-    // Thêm sản phẩm vào giỏ hàng
-    function addToCart(product) {
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (existingProduct) {
-            existingProduct.quantity += 1; // Tăng số lượng nếu sản phẩm đã có trong giỏ
-        } else {
-            cart.push({ ...product, quantity: 1 }); // Thêm sản phẩm mới vào giỏ
-        }
-        localStorage.setItem('cart', JSON.stringify(cart)); // Lưu giỏ hàng vào localStorage
-        alert('Sản phẩm đã được thêm vào giỏ hàng!');
-    }
-
-    // Ví dụ về cách thêm sản phẩm vào giỏ hàng
-    // Bạn có thể gọi hàm này khi người dùng nhấn nút "Thêm vào giỏ hàng"
-    // addToCart({ id: '1', title: 'Nhẫn nữ đính đá CZ vàng 10K Chalice N 3CT', price: 13400000 });
-});
     </script>
+    
 </head>
 <body>
     <style>
@@ -78,11 +51,11 @@
     position: relative;
     background: url('../img/logo.jpg') no-repeat center center;
     background-size: cover;
-    height: 100vh; /* Chiều cao toàn màn hình */
+    height: 100vh; 
     display: flex;
-    flex-direction: column; /* Đảm bảo nội dung con xếp theo chiều dọc */
-    align-items: center; /* Căn giữa theo chiều ngang */
-    justify-content: center; /* Căn giữa theo chiều dọc */
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
     color: #000000;
     text-align: center;
     padding: 20px;

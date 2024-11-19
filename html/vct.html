@@ -10,6 +10,56 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d4377e;
+            margin-bottom: 15px;
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+        }
+
+        .images-section img {
+    width: 100%; /* Đặt kích thước ảnh chiếm toàn bộ khung cha */
+    height: auto; /* Giữ tỷ lệ gốc của hình ảnh */
+    border-radius: 8px; /* Bo góc ảnh */
+    object-fit: cover; /* Điều chỉnh cách ảnh lấp đầy khung */
+    transition: transform 0.3s ease; /* Hiệu ứng phóng to khi hover */
+}
+
+.images-section .image-box {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center; /* Căn giữa nội dung */
+    max-height: 300px; /* Đặt chiều cao tối đa cho ảnh */
+    overflow: hidden; /* Ẩn phần hình ảnh vượt quá khung */
+}
+
+.images-section img:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+    </style>
     <!-- Top Bar -->
     <div class="top-bar bg-dark text-light py-2">
         <div class="container">
@@ -79,6 +129,78 @@
             </div>
         </div>
     </nav>
+
+    <div class="container">
+        <h1 class="text-center text-primary mb-4">Giới thiệu - Thế Giới Kim Cương</h1>
+        
+        <div class="row">
+            <!-- Left Content Section -->
+            <div class="col-md-8">
+                <!-- Giới thiệu -->
+                <div class="content-section">
+                    <h2 class="section-title">Giới thiệu</h2>
+                    <p>
+                        Thế Giới Kim Cương (TGKC) là một trong những thương hiệu hàng đầu Việt Nam chuyên về kim cương và trang sức. 
+                        Cho đến nay, Công ty đã có một đội ngũ hơn 800 nhân viên và hệ thống 100++ cửa hàng phủ rộng khắp toàn quốc.
+                    </p>
+                    <p>
+                        Từ ngày 30/04/2020, TGKC tự hào là thành viên chính thức của Tập đoàn VBQ DOJI.
+                    </p>
+                </div>
+
+                <!-- Triết lý kinh doanh -->
+                <div class="content-section">
+                    <h2 class="section-title">Triết lý kinh doanh</h2>
+                    <p>Làm cho cuộc sống tốt đẹp hơn mỗi ngày.</p>
+                </div>
+
+                <!-- Giá trị -->
+                <div class="content-section">
+                    <h2 class="section-title">Giá trị</h2>
+                    <p>
+                        Chúng tôi đề cao giá trị của sự trung thực, đạo đức, tiêu chuẩn cao, sự phát triển cá nhân và nghề nghiệp thông qua việc không ngừng cải tiến, cố gắng đạt đến sự tốt nhất trong chất lượng sản phẩm và chăm sóc khách hàng nhằm thể hiện sự tận tâm của chúng tôi dành cho Khách Hàng.
+                    </p>
+                </div>
+
+                <!-- Tầm nhìn -->
+                <div class="content-section">
+                    <h2 class="section-title">Tầm nhìn</h2>
+                    <p>
+                        Thế Giới Kim Cương hướng đến mục tiêu trở thành thương hiệu kim cương và trang sức uy tín nhất Việt Nam.
+                    </p>
+                </div>
+
+                <!-- Sứ mệnh -->
+                <div class="content-section">
+                    <h2 class="section-title">Sứ mệnh</h2>
+                    <p>
+                        Nỗ lực đạt được mục tiêu đề ra và phát triển bền vững, không ngừng mở rộng số lượng cửa hàng bán lẻ trên toàn quốc.
+                    </p>
+                    <p>
+                        Nỗ lực cung cấp dịch vụ khách hàng tốt nhất nhằm tạo dựng được niềm tin và sự yêu mến của Khách Hàng.
+                    </p>
+                    <p>
+                        Luôn quan tâm và chú trọng đầu tư cho việc đào tạo và phát triển toàn diện nguồn nhân lực.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Images Section -->
+            <div class="col-md-4">
+                <div class="images-section">
+                    <div class="image-box mb-3">
+                        <img src="https://file.hstatic.net/1000381168/file/h1_45d7b1be49cc46e0bc7c89b475db8bed.png" alt="Hình ảnh 1">
+                    </div>
+                    <div class="image-box mb-3">
+                        <img src="https://file.hstatic.net/1000381168/file/h3_a746bbf1ce16427393039de5dbbede57.png" alt="Hình ảnh 2">
+                    </div>
+                    <div class="image-box mb-3">
+                        <img src="https://file.hstatic.net/1000381168/file/h4_f6cbccc5867e48018bd50bee11a07742.png" alt="Hình ảnh 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-dark text-light py-5">
         <div class="container">
