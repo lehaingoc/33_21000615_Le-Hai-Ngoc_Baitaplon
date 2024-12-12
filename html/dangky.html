@@ -11,61 +11,67 @@
 
     <script>
         $(document).ready(function () {
-            $('#registrationForm').on('submit', function (e) {
-                e.preventDefault();
+    $('#registrationForm').on('submit', function (e) {
+        e.preventDefault();
 
-                // Reset validation classes
-                $('.form-control').removeClass('is-invalid');
+        // Reset validation classes
+        $('.form-control').removeClass('is-invalid');
 
-                // Form validation
-                let isValid = true;
+        // Form validation
+        let isValid = true;
 
-                // Full name validation
-                const fullName = $('#fullName').val().trim();
-                if (fullName.length < 2) {
-                    $('#fullName').addClass('is-invalid');
-                    isValid = false;
-                }
+        // Full name validation
+        const fullName = $('#fullName').val().trim();
+        if (fullName.length < 2) {
+            $('#fullName').addClass('is-invalid');
+            isValid = false;
+        }
 
-                // Email validation
-                const email = $('#email').val().trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    $('#email').addClass('is-invalid');
-                    isValid = false;
-                }
+        // Email validation
+        const email = $('#email').val().trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            $('#email').addClass('is-invalid');
+            isValid = false;
+        }
 
-                // Phone validation
-                const phone = $('#phone').val().trim();
-                const phoneRegex = /^[0-9]{10}$/;
-                if (!phoneRegex.test(phone)) {
-                    $('#phone').addClass('is-invalid');
-                    isValid = false;
-                }
+        // Phone validation
+        const phone = $('#phone').val().trim();
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            $('#phone').addClass('is-invalid');
+            isValid = false;
+        }
 
-                // Password validation
-                const password = $('#password').val();
-                if (password.length < 8) {
-                    $('#password').addClass('is-invalid');
-                    isValid = false;
-                }
+        // Password validation
+        const password = $('#password').val();
+        if (password.length < 8) {
+            $('#password').addClass('is-invalid');
+            isValid = false;
+        }
 
-                // Confirm password validation
-                const confirmPassword = $('#confirmPassword').val();
-                if (confirmPassword !== password) {
-                    $('#confirmPassword').addClass('is-invalid');
-                    isValid = false;
-                }
+        // Confirm password validation
+        const confirmPassword = $('#confirmPassword').val();
+        if (confirmPassword !== password) {
+            $('#confirmPassword').addClass('is-invalid');
+            isValid = false;
+        }
 
-                // If valid, show modal with user information
-                if (isValid) {
-                    $('#displayFullName').text(fullName);
-                    $('#displayEmail').text(email);
-                    $('#displayPhone').text(phone);
-                    $('#successModal').modal('show');
-                }
+        // If valid, show modal with user information
+        if (isValid) {
+            $('#displayFullName').text(fullName);
+            $('#displayEmail').text(email);
+            $('#displayPhone').text(phone);
+            $('#successModal').modal('show');
+
+            // Redirect to login page after modal is closed
+            $('#successModal').on('hidden.bs.modal', function () {
+                window.location.href = 'index.html'; // Thay đổi thành đường dẫn đến trang đăng nhập
             });
-        });
+        }
+    });
+});
+
     </script>
 </head>
 <body>
